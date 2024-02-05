@@ -1,0 +1,23 @@
+let sides = 10;
+let radiusShort = 100;
+let radiusLong = 200;
+
+function setup() {
+  createCanvas(400, 400);
+  angleMode(DEGREES);
+}
+
+function draw() {
+  background(255);
+  translate(width / 2, height / 2);
+
+  beginShape();
+  for (let i = 0; i < sides; i++) {
+    let angle = map(i, 0, sides, 0, 360);
+    let radius = (i % 2 === 0) ? radiusLong : radiusShort;
+    let x = radius * cos(angle);
+    let y = radius * sin(angle);
+    vertex(x, y);
+  }
+  endShape(CLOSE);
+}
