@@ -1,0 +1,22 @@
+let canvasWidth, canvasHeight;
+let centerLineX;
+
+function setup() {
+  canvasWidth = windowWidth;
+  canvasHeight = windowHeight;
+  createCanvas(canvasWidth, canvasHeight);
+  
+  centerLineX = width / 2;
+}
+
+function draw() {
+  background(255);
+  stroke(0);
+  strokeWeight(2);
+  line(centerLineX, 0, centerLineX, height);
+  let cursorPosition = mouseX < centerLineX ? 'Left' : 'Right';
+  fill(0);
+  textSize(18);
+  textAlign(LEFT, TOP);
+  text(`Cursor position: ${cursorPosition}`, 10, 10);
+}
