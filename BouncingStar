@@ -1,0 +1,42 @@
+let x, y;
+let speedX, speedY;
+let diameter;
+function setup() {
+  createCanvas(600, 400);
+  x = width / 2;
+  y = height / 2;
+  speedX = 5;
+  speedY = 3;
+  diameter = 50;
+}
+function draw() {
+  background(220);
+  x += speedX;
+  y += speedY;
+  if (x + diameter / 2 > width || x - diameter / 2 < 0) {
+    speedX *= -1;
+  }
+  if (y + diameter / 2 > height || y - diameter / 2 < 0) {
+    speedY *= -1;
+  }
+  drawStar(x, y, diameter);
+}
+function drawStar(x, y, diameter) {
+  push();
+  translate(x, y);
+  fill(255, 255, 0);
+  noStroke();
+  beginShape();
+  for (let i = 0; i < 5; i++) {
+    let angle = TWO_PI * i / 5 - HALF_PI;
+    let x1 = cos(angle) * diameter / 2;
+    let y1 = sin(angle) * diameter / 2;
+    vertex(x1, y1);
+    angle += TWO_PI / 10;
+    let x2 = cos(angle) * diameter / 4;
+    let y2 = sin(angle) * diameter / 4;
+    vertex(x2, y2);
+  }
+  endShape(CLOSE);
+  pop();
+}
