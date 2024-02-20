@@ -1,0 +1,53 @@
+let angle = 0;
+let lineLength = 10;
+let maxLength = 50;
+let brownColor = false;
+function setup() {
+  createCanvas(1000, 1000);
+  isLooping();
+}
+function draw() {
+  background(220);
+  translate(width / 2, height / 2);
+  rotate(radians(angle));
+  if (mouseIsPressed) {
+    brownColor = true;
+  } else {
+    brownColor = false;
+  }
+  background(220);
+  fill(255, 255, 255);
+  triangle(230, 100, 250, 45, 200, 100);
+  circle(250, 50, 25);
+  if (brownColor) {
+    fill(139, 69, 19); // Brown color
+  } else {
+    fill(255, 255, 255);
+  }
+  rect(200, 100, 25, 175);
+  rect(195, 225, 35, 10);
+  rect(195, 250, 35, 10);
+  rect(195, 275, 35, 10);
+  arc(150, 285, 50, 50, QUARTER_PI, HALF_PI + PI);
+  rect(125, 285, 175, 100);
+  fill(0, 0, 0);
+  ellipse(225, 375, 175, 12);
+  line(203, 280, 203, 95);
+  line(206, 280, 206, 90);
+  line(210, 280, 210, 85);
+  line(214, 280, 214, 80);
+  line(218, 280, 218, 75);
+  line(222, 280, 222, 70);
+  circle(200, 95, 8);
+  circle(205, 90, 8);
+  circle(210, 85, 8);
+  circle(215, 80, 8);
+  circle(220, 75, 8);
+  circle(225, 70, 8);
+  arc(300, 300, 50, 50, 55, HALF_PI + HALF_PI);
+  arc(300, 350, 50, 50, QUARTER_PI = PI, HALF_PI);
+  rect(225, 300, 75, 50);
+  if (mouseIsPressed && angle < 45) {
+    angle += 1;
+  }
+}
