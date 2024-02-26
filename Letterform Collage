@@ -1,0 +1,32 @@
+let letter = 'A';
+let letters = [];
+
+function setup() {
+  createCanvas(600, 400);
+  textSize(32);
+}
+function draw() {
+  background(255);
+  for (let l of letters) {
+    l.display();
+  }
+}
+function keyPressed() {
+  if (key >= 'A' && key <= 'Z') {
+    letter = key;
+  }
+}
+function mousePressed() {
+  letters.push(new Letter(mouseX, mouseY, letter));
+}
+class Letter {
+  constructor(x, y, char) {
+    this.x = x;
+    this.y = y;
+    this.char = char;
+  }
+  display() {
+    fill(0);
+    text(this.char, this.x, this.y);
+  }
+}
