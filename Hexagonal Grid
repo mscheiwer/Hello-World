@@ -1,0 +1,54 @@
+let hexRadius = 30;
+let hexWidth;
+let hexHeight;
+let hexagons = [];
+let numRows = 8;
+let numCols = 8;
+let frameCounter = 0;
+function setup() {
+  createCanvas(800, 600);
+  hexWidth = sqrt(3) * hexRadius;
+  hexHeight = 2 * hexRadius;
+  noStroke();
+  for (let row = 0; row < numRows; row++) {
+    for (let col = 0; col < numCols; col++) {
+      let x = col * (hexWidth * 0.75);
+      let y = row * hexHeight + (col % 2) * (hexHeight / 2);
+      hexagons.push(createVector(x, y));
+    }
+  }
+}
+function draw() {
+  background(220);
+  if (frameCounter % 50 === 0) {
+    moveHexagons();
+  }
+  frameCounter++;
+  for (let i = 0; i < hexagons.length; i++) {
+    let x = hexagons[i].x;
+    let y = hexagons[i].y;
+    let fillColor = (128 + 128 * sin(millis() / 1000));
+    drawHexagon(x, y, hexRadius, fillColor);
+  }
+}
+function drawHexagon(x, y, radius, fillColor) {
+  fill(fillColor);
+  beginShape();
+  for (let i = 0; i < 6; i++) {
+    let angle = PI / 3 * i;
+    let xPos = x + radius * cos(angle);
+    let yPos = y + radius * sin(angle);
+    vertex(xPos, yPos);
+  }
+  endShape(CLOSE);
+}
+function moveHexagons() {
+  for (let i = hexagons.length - 1; i >= numCols; i--) {
+    hexagons[i] = hexagons[i - numCols];
+  }
+  for (let i = 0; i < numCols; i++) {
+    let x = i * (hexWidth * 0.75);
+    let y = 0;
+    hexagons[i] = createVector(x, y);
+  }
+}
