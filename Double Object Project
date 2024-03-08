@@ -1,0 +1,83 @@
+// First Function
+let face;
+function setup() {
+  createCanvas(400, 400);
+  face = new Face(width / 2, height / 2);
+}
+function draw() {
+  background(255);
+  face.draw();
+}
+class Face {
+  constructor(x, y) {
+    this.x = x;
+    this.y = y;
+    this.eyeColor = color(random(255), random(255), random(255));
+    this.eyeSize = 20;
+    this.eyeSpacing = 40;
+    this.noseSize = 10;
+    this.mouthWidth = 50;
+    this.mouthHeight = 10;
+  }
+  draw() {
+    this.drawEyes();
+    this.drawNose();
+    this.drawMouth();
+  }
+  drawEyes() {
+    fill(this.eyeColor);
+    ellipse(this.x - this.eyeSpacing / 2, this.y - 20, this.eyeSize, this.eyeSize);
+    ellipse(this.x + this.eyeSpacing / 2, this.y - 20, this.eyeSize, this.eyeSize);
+  }
+  drawNose() {
+    fill(150);
+    triangle(
+      this.x - this.noseSize / 2, this.y + 10,
+      this.x + this.noseSize / 2, this.y + 10,
+      this.x, this.y + 10 - this.noseSize
+    );
+  }
+  drawMouth() {
+    fill(255, 0, 0);
+    rect(this.x - this.mouthWidth / 2, this.y + 20, this.mouthWidth, this.mouthHeight);
+  }
+}
+// Second Function
+let particles = [];
+function setup() {
+  createCanvas(400, 400);
+  for (let i = 0; i < 100; i++) {
+    particles.push(new Particle(random(width), random(height)));
+  }
+}
+function draw() {
+  background(255);
+  for (let particle of particles) {
+    let attractionForce = createVector(mouseX - particle.position.x, mouseY - particle.position.y);
+    attractionForce.normalize();
+    attractionForce.mult(0.1);
+    particle.applyForce(attractionForce);
+    particle.update();
+    particle.display();
+  }
+}
+class Particle {
+  constructor(x, y) {
+    this.position = createVector(x, y);
+    this.velocity = createVector(0, 0);
+    this.acceleration = createVector(0, 0);
+  }
+  applyForce(force) {
+    this.acceleration.add(force);
+  }
+  update() {
+    this.velocity.add(this.acceleration);
+    this.position.add(this.velocity);
+    this.acceleration.mult(0);
+  }
+  display() {
+    fill(0);
+    noStroke();
+    ellipse(this.position.x, this.position.y, 5, 5);
+  }
+}
