@@ -1,0 +1,30 @@
+let texts = [];
+let averages = [];
+function preload() {
+ texts.push(loadStrings('Scheiwer_Matthew_Cover_Letter.pdf'));
+}
+function setup() {
+  createCanvas(800, 600);
+  textAlign(CENTER);
+  for (let i = 0; i < texts.length; i++) {
+    let textData = texts[i].join(' ');
+    let words = textData.split(/\W+/);
+    let totalChars = 0;
+    for (let j = 0; j < words.length; j++) {
+      totalChars += words[j].length;
+    }
+    let average = totalChars / words.length;
+    averages.push(average);
+  }
+  background(255);
+  textSize(16);
+  for (let i = 0; i < texts.length; i++) {
+    let yPos = map(i, 0, texts.length - 1, 50, height - 50);
+    let textData = texts[i].join(' ');
+    let words = textData.split(/\W+/);
+    let totalWords = words.length;
+    let averageLength = averages[i];
+    fill(0);
+    text('Text ' + (i + 1) + ': ' + totalWords + ' words, Average Length: ' + averageLength.toFixed(2), width / 2, yPos);
+  }
+}
