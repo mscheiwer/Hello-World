@@ -1,0 +1,92 @@
+let song;
+let fft;
+let particles = [];
+function preload() {
+  song = loadSound('"C:\Users\Owner\OneDrive\Music\LVB_Symphony9_1.mp3"');
+)
+function setup() {
+  createCanvas(windowWidth, windowHeight);
+  fft = new p5.FFT();
+  song.play();
+}
+function draw() {
+  background(0);
+  let spectrum = fft.analyze();
+  noStroke();
+  for (let i = 0; i < spectrum.length; i++) {
+    let amplitude = spectrum[i];
+    let x = map(i, 0, spectrum.length, 0, width);
+    let h = -height + map(amplitude, 0, 255, height, 0);
+    fill(255);
+    rect(x, height, width / spectrum.length, h);
+  }
+  let amplitude = fft.getEnergy("bass");
+  let newParticle = new Particle(amplitude);
+  particles.push(newParticle);
+  for (let i = particles.length - 1; i >= 0; i--) {
+    particles[i].update();
+    particles[i].display();
+    if (particles[i].finished()) {
+      particles.splice(i, 1);
+    }
+  }
+}
+
+class Particle {
+  constructor(amplitude) {
+    this.x = random(width);
+    this.y = random(height);
+    this.diameter = map(amplitude, 0, 255, 10, 50);
+    this.speed = createVector(random(-1, 1), random(-1, 1));
+    this.color = color(random(255), random(255), random(255));
+  }
+  update() {
+    this.x += this.speed.x;
+    this.y += this.speed.y;
+  }
+  display() {
+    fill(this.color);
+    ellipse(this.x, this.y, this.diameter, this.diameter);
+  }
+  finished() {
+    return this.x < 0 || this.x > width || this.y < 0 || this.y > height;
+  }
+}
+
+let shapes = [];
+let numShapes = 6;
+let angle = 0;
+function setup() {
+  createCanvas(windowWidth, windowHeight);
+  generateShapes();
+}
+function draw() {
+  background(255);
+  translate(width / 2, height / 2);
+  for (let i = 0; i < 4; i++) {
+    rotate(PI / 2);
+    for (let j = 0; j < shapes.length; j++) {
+      let x = cos(angle + j * TWO_PI / numShapes) * 200;
+      let y = sin(angle + j * TWO_PI / numShapes) * 200;
+    }
+  }
+  angle += 0.01;
+}
+function generateShapes() {
+  shapes = [];
+  for (let i = 0; i < numShapes; i++) {
+    let size = random(20, 80);
+    let noiseVal = noise(i);
+    let variation = map(noiseVal, 0, 1, -10, 10);
+    shapes.push({ size: size + variation });
+  }
+}
+function keyPressed() {
+  if (keyCode === UP_ARROW) {
+    numShapes++;
+    generateShapes();
+  } else if (keyCode === DOWN_ARROW && numShapes > 1) {
+    numShapes--;
+    generateShapes();
+  }
+}
