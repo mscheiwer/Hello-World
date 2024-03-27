@@ -1,0 +1,34 @@
+let emailData;
+let filteredEmails = [];
+function preload() {
+  emailData = loadJSON('C:\\Users\\Owner\\OneDrive\\Email Project\\BIZ 3000 Meeting Absence.json');
+}
+function setup() {
+  createCanvas(800, 600);
+  filterSentEmails("Sent");
+  displayEmails(filteredEmails);
+}
+function filterSentEmails(sender) {
+  filteredEmails = emailData.emails.filter(email => email.sender === sender);
+}
+function displayEmails(emails) {
+  let yOffset = 50;
+  for (let i = 0; i < emails.length; i++) {
+    let email = emails[i];
+    textAlign(LEFT);
+    text(email.title, 50, yOffset);
+    yOffset += 20;
+  }
+}
+function draw() {
+}
+function keyPressed() {
+  if (key === 'A') {
+    filterSentEmailsByTitle("Your Filtered Title");
+    clear();
+    displayEmails(filteredEmails);
+  }
+}
+function filterSentEmailsByTitle(title) {
+  filteredEmails = emailData.emails.filter(email => email.sender === "Sent" && email.title.includes(title));
+}
