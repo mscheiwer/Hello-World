@@ -1,0 +1,28 @@
+let frontImage;
+let backImage;
+let isFlipped = false;
+function preload() {
+  frontImage = loadImage('s-l1600.jpg');
+  backImage = loadImage('columbus-ohio-4127568_640.jpg');
+}
+function setup() {
+  createCanvas(600, 400);
+  textAlign(CENTER, CENTER);
+  textSize(24);
+}
+function draw() {
+  background(220);
+  if (!isFlipped) {
+    image(frontImage, 0, 0, width, height);
+    text('Greetings from Arizona!', width/2, height/2);
+  } else {
+    image(backImage, 0, 0, width, height);
+    text('Wish you were here in Columbus!', width/2, height/2);
+  }
+}
+
+function mouseClicked() {
+  if (mouseX > 0 && mouseX < width && mouseY > 0 && mouseY < height) {
+    isFlipped = !isFlipped;
+  }
+}
