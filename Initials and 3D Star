@@ -1,0 +1,120 @@
+function setup() {
+  createCanvas(400, 400, WEBGL);
+}
+function draw() {
+  background(220);
+  rotateX(frameCount * 0.01);
+  rotateY(frameCount * 0.01);
+  translate(-110, 0, 0);
+  drawM();
+  translate(60, 0, 0);
+  drawA();
+  translate(60, 0, 0);
+  drawT();
+  translate(40, 0, 0);
+  drawT();
+  translate(60, 0, 0);
+  drawH();
+  translate(60, 0, 0);
+  drawE();
+  translate(80, 0, 0);
+  drawW();
+}
+function drawM() {
+  beginShape();
+  vertex(-20, -50, -20);
+  vertex(-20, 50, -20);
+  vertex(-20, 0, -20);
+  vertex(0, -50, 0);
+  vertex(0, 50, 0);
+  vertex(20, -50, -20);
+  vertex(20, 50, -20);
+  vertex(20, 0, -20);
+  endShape(CLOSE);
+}
+function drawA() {
+  beginShape();
+  vertex(-20, -50, 0);
+  vertex(20, -50, 0);
+  vertex(10, 0, 0);
+  vertex(-10, 0, 0);
+  endShape(CLOSE);
+  beginShape();
+  vertex(-10, 0, 0);
+  vertex(10, 0, 0);
+  vertex(0, 50, 0);
+  endShape(CLOSE);
+}
+function drawT() {
+  beginShape();
+  vertex(-20, -50, 0);
+  vertex(20, -50, 0);
+  vertex(0, -50, 0);
+  endShape(CLOSE);
+  beginShape();
+  vertex(0, -50, 0);
+  vertex(0, 50, 0);
+  endShape(CLOSE);
+}
+function drawH() {
+  beginShape();
+  vertex(-20, -50, 0);
+  vertex(-20, 50, 0);
+  vertex(-20, 0, 0);
+  vertex(20, 0, 0);
+  endShape(CLOSE);
+}
+function drawE() {
+  beginShape();
+  vertex(-20, -50, 0);
+  vertex(20, -50, 0);
+  vertex(-20, 0, 0);
+  vertex(20, 0, 0);
+  endShape(CLOSE);
+  beginShape();
+  vertex(-20, -25, 0);
+  vertex(0, -25, 0);
+  endShape(CLOSE);
+  beginShape();
+  vertex(-20, 25, 0);
+  vertex(20, 25, 0);
+  endShape(CLOSE);
+}
+function drawW() {
+  beginShape();
+  vertex(-20, -50, 0);
+  vertex(-10, 50, 0);
+  vertex(0, 0, 0);
+  vertex(10, 50, 0);
+  vertex(20, -50, 0);
+  endShape(CLOSE);
+}
+
+let angle = 0;
+function setup() {
+  createCanvas(400, 400, WEBGL);
+}
+function draw() {
+  background(220);
+  rotateX(angle);
+  rotateY(angle * 0.3);
+  rotateZ(angle * 1.2);
+  drawStar(0, 0, 0, 100, 5);
+  angle += 0.01;
+}
+function drawStar(x, y, z, radius, npoints) {
+  let angle = TWO_PI / npoints;
+  let halfAngle = angle / 2.0;
+  beginShape();
+  for (let a = -PI/2; a < TWO_PI - PI/2; a += angle) {
+    let sx = x + cos(a) * radius;
+    let sy = y + sin(a) * radius;
+    let sz = z;
+    vertex(sx, sy, sz);
+    sx = x + cos(a + halfAngle) * radius * 0.5;
+    sy = y + sin(a + halfAngle) * radius * 0.5;
+    sz = z + radius * 0.5;
+    vertex(sx, sy, sz);
+  }
+  endShape(CLOSE);
+}
