@@ -1,0 +1,70 @@
+let population = 1000;
+let initialInfected = 1;
+let infectionRate = 0.3;
+let recoveryRate = 0.1;
+let days = 30;
+let susceptible = [];
+let infected = [];
+let recovered = [];
+function setup() {
+  createCanvas(400, 400);
+  for (let i = 0; i < population; i++) {
+    susceptible.push(new Individual(width * 0.5, height * 0.5));
+  }
+  for (let i = 0; i < initialInfected; i++) {
+    let index = floor(random(population));
+    susceptible[index].state = 'I';
+    infected.push(susceptible[index]);
+    susceptible.splice(index, 1);
+  }
+  simulateAndPredict();
+}
+function draw() {
+  background(220);
+  for (let person of susceptible) {
+    person.update();
+    person.display(color(0, 0, 255));
+  }
+  for (let person of infected) {
+    person.update();
+    person.display(color(255, 0, 0));
+  }
+  for (let person of recovered) {
+    person.update();
+    person.display(color(0, 255, 0));
+  }
+  for (let infector of infected) {
+    for (let target of susceptible) {
+      if (random(1) < infectionRate) {
+        target.state = 'I';
+        infected.push(target);
+        susceptible.splice(susceptible.indexOf(target), 1);
+      }
+    }
+    if (random(1) < recoveryRate) {
+      infector.state = 'R';
+      recovered.push(infector);
+      infected.splice(infected.indexOf(infector), 1);
+    }
+  }
+}
+class Individual {
+  constructor(x, y) {
+    this.position = createVector(x, y);
+    this.state = 'S';
+  }
+  update() {
+  } 
+  display(col) {
+    fill(col);
+    noStroke();
+    ellipse(this.position.x, this.position.y, 10, 10);
+  }
+}
+function simulateAndPredict() {
+  for (let i = 0; i < days; i++) {
+    draw();
+  }
+  let finalInfected = infected.length;
+  console.log("Prediction: After " + days + " days, there will be " + finalInfected + " infected individuals.");
+}
