@@ -23,6 +23,13 @@ let stars = []; // Array to hold star positions
 let isLyricsSaid = false; // Flag to track if the lyrics have been said
 let guitarStringBroken = false; // Flag to track if the guitar string has broken
 
+let audio; // Variable to hold the audio file
+
+function preload() {
+  // Load the audio file
+  audio = loadSound('SRV_Final_Project.mp3');
+}
+
 function setup() {
   createCanvas(1000, 1000);
 }
@@ -180,6 +187,11 @@ function draw() {
       stars[i].x = 0;
       stars[i].y = random(height);
     }
+  }
+
+  // Check if the animation starts and play the audio
+  if (!NumberOneInBox && !rotationComplete && frameCount === 1) {
+    audio.play();
   }
 }
 
